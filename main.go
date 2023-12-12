@@ -21,7 +21,7 @@ func livecheck(ip string, stopChan chan struct{}) {
 	defer file.Close()
 
 	writer := csv.NewWriter(file)
-	header := []string{"#ts", "status"}
+	header := []string{"#ts", ip}
 	writer.Write(header)
 	writer.Flush()
 
@@ -46,9 +46,9 @@ func livecheck(ip string, stopChan chan struct{}) {
 		case <-time.After(10 * time.Second):
 			_, err := ping(ip)
 			if err != nil {
-				stamp("NOK")
+				stamp("0")
 			} else {
-				stamp("OK")
+				stamp("1")
 			}
 		}
 	}
